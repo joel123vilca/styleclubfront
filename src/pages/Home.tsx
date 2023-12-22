@@ -3,6 +3,8 @@ import axios from "axios";
 import Welcome from "../assets/images/welcome.jpg";
 import Slider2 from "../assets/images/slide-2.png";
 import Slider from "../assets/images/slider.jpg";
+import Voucher from "../components/Voucher";
+
 import { Dispatch } from "redux";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -63,15 +65,7 @@ const Home: React.FC<HomeProps> = () => {
         <hr className="border-t border-gray-300 w-full" />
         <div className="grid grid-cols-3 gap-4">
           {vouchers?.map((item, index) => (
-            <div
-              key={index}
-              className="h-[320px] w-full bg-[#EBEBEB] mt-4 flex flex-col items-center justify-center"
-            >
-              <div className="w-[400px] h-[200px] bg-black"></div>
-              <hr className="border-t border-gray-300 my-1 w-full" />
-              <span className="text-gray-500">{item.name}</span>
-              <hr className="border-t border-gray-300 my-1 w-full" />
-            </div>
+            <Voucher key={index} name={item.name} imageUrl="url" />
           ))}
         </div>
       </div>
