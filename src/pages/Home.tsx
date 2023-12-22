@@ -1,11 +1,43 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import Welcome from "../assets/images/welcome.jpg";
 import Slider2 from "../assets/images/slide-2.png";
 import Slider from "../assets/images/slider.jpg";
+import { Dispatch } from "redux";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  fetchDataRequest,
+  fetchDataSuccess,
+  fetchDataFailure,
+} from "../redux/actions";
 
 interface HomeProps {}
 
+interface Planet {
+  name: string;
+}
+
 const Home: React.FC<HomeProps> = () => {
+  const dispatch: Dispatch = useDispatch();
+  const data = useSelector((state: any) => state.data);
+  const loading = useSelector((state: any) => state.loading);
+  const error = useSelector((state: any) => state.error);
+
+  const [vouchers, setVouchers] = useState<Planet[]>([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get("https://swapi.dev/api/planets");
+        setVouchers(response.data.results);
+        //dispatch(fetchDataSuccess(response.data.results));
+      } catch (error) {
+        //dispatch(fetchDataFailure("Hubo un error al cargar los datos."));
+      }
+    };
+
+    fetchData();
+  }, [dispatch]);
   return (
     <div className="overflow-y-auto">
       <div className="bg-black w-full h-[400px] flex">
@@ -29,8 +61,18 @@ const Home: React.FC<HomeProps> = () => {
       <div className="mt-4 p-10">
         <div className="text-[30px] text-gray-500 mb-2">Vouchers</div>
         <hr className="border-t border-gray-300 w-full" />
-        <div className="h-[320px] w-[520px] bg-[#EBEBEB] mt-4 flex items-center justify-center">
-          <div className="w-[440px] h-[270px] bg-black"></div>
+        <div className="grid grid-cols-3 gap-4">
+          {vouchers?.map((item, index) => (
+            <div
+              key={index}
+              className="h-[320px] w-full bg-[#EBEBEB] mt-4 flex flex-col items-center justify-center"
+            >
+              <div className="w-[400px] h-[200px] bg-black"></div>
+              <hr className="border-t border-gray-300 my-1 w-full" />
+              <span className="text-gray-500">{item.name}</span>
+              <hr className="border-t border-gray-300 my-1 w-full" />
+            </div>
+          ))}
         </div>
       </div>
       <img src={Slider} alt="slider" className="w-full object-contain h-full" />
