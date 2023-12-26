@@ -51,7 +51,7 @@ const Home: React.FC<HomeProps> = () => {
         className="w-full object-contain h-full"
       />
       <div className="bg-gray-200 w-full h-[200px] grid grid-cols-2 p-8">
-        <div className="text-5xl font-medium flex items-end justify-center ">
+        <div className="text-5xl font-medium flex items-end justify-center">
           VOUCHERS
         </div>
         <div className="w-[300px] text-xl text-left">
@@ -62,8 +62,8 @@ const Home: React.FC<HomeProps> = () => {
       </div>
       <div className="mt-4 p-10">
         <div className="text-[30px] text-gray-500 mb-2">Vouchers</div>
-        <hr className="border-t border-gray-300 w-full" />
-        <div className="grid grid-cols-3 gap-4">
+        <hr className="border-t border-gray-300 w-full mt-6" />
+        <div className="grid grid-cols-3 gap-6  mt-8">
           {vouchers?.map((item, index) => (
             <Voucher key={index} name={item.name} imageUrl="url" />
           ))}
